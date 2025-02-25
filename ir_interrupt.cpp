@@ -26,7 +26,7 @@
 //赤外線を検知したらLEDを点灯させる割り込み
 
 void __interrupt() ISR(void) {
-    if (INTF) {  // 外部割り込み（RA0がLOW）
+    if (INTF && RB0 == 0) {  // 外部割り込みかつRA0がLOWの時
         INTF = 0;  // 割り込みフラグクリア
         RA1 = 1;   // LED ON
         __delay_ms(500); // 0.5秒待機
