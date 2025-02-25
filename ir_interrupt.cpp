@@ -23,7 +23,6 @@
 
 #define _XTAL_FREQ 1000000
 
-//赤外線を検知したらLEDを点灯させる割り込み
 
 void __interrupt() ISR(void) {
     if (INTF) {  // 外部割り込み（RA0がLOW）
@@ -34,24 +33,13 @@ void __interrupt() ISR(void) {
     }
 }
 
-//ピン情報
-// RA1 : LED
-// RB0 : 赤外線入力（割り込み）
-// RB1 : サーボモーターの入力
-// RB3 : サーボモーターの出力
-
 void main(void) {
-    //出力が0, 入力が1
-    TRISA = 0b00000000; // RA1をLEDように出力に設定
-    TRISB = 0b00000011; // RB0（赤外線入力）、RB1（サーボ入力）を入力に設定
-
-    ANSELA = 0b00000000;    // 全ピンをデジタルI/Oに設定
-    ANSELB = 0b00000000;    // 全ピンをデジタルI/Oに設定
-
-    WPUBbits.WPUB0 = 1;  // RB0にプルアップを有効化（赤外線入力）
-    WPUBbits.WPUB1 = 1;  // RB1にプルアップを有効化（サーボ入力）
+    TRISA = 0b00100001;
+    TRISB = 0b00000001;
+    ANSELA = 0b00000000;
+    ANSELB = 0b00000000;
+    WPUB = 0b00000001; // RB0をプルアップする
     OPTION_REGbits.nWPUEN = 0;//プルアップ機能を有効にする
-
     OSCCONbits.IRCF = 0b1011;   // 1MHz
 
     // 割り込み設定
@@ -62,7 +50,7 @@ void main(void) {
 
 
     while(1){
-        if(RB1 == 1){ // 90°      
+        if(RB0 == 1){ // 90°      
             RB3 = 1;
             __delay_us(1450);
             RB3 = 0;
