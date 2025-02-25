@@ -37,7 +37,7 @@ void __interrupt() ISR(void) {
             INTF = 0;  // 割り込みフラグクリア
             
             // サーボを開く（90°）
-            for (int i = 0; i < 250; i++)
+            for (uint32_t i = 0; i < 250; i++)
             {
                 RB3 = 1;
                 __delay_us(1450);
@@ -49,7 +49,7 @@ void __interrupt() ISR(void) {
             __delay_ms(5000);  // 5秒待つ
 
             // サーボを閉じる（0°）
-            for (int i = 0; i < 250; i++)
+            for (uint32_t j = 0; j < 250; j++)
             {
                 RB3 = 1;
                 __delay_us(500);
