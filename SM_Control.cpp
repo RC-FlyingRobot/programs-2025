@@ -39,7 +39,7 @@ void main(void) {
     OSCCONbits.IRCF = 0b1011;   // 1MHz
 
     while(1){
-        if(RB0 == 1){ // 90°      
+        if(RA0 == 1){ // 90°      
             RB3 = 1;
             __delay_us(1450);
             RB3 = 0;
