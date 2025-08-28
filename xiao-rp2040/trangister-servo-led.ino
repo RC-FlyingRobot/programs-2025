@@ -14,6 +14,7 @@ void setup() {
   pinMode(irButton, INPUT);
   myservo.attach(servoButton);  // attaches the servo on GIO2 to the servo object
   pinMode(ledButton, OUTPUT);
+  myservo.write(0);
 
 }
 
